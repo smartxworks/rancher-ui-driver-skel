@@ -3,32 +3,169 @@
     {{!-- This line shows the driver title which you don't have to change it --}}
     <div class="over-hr mb-20"><span>{{driverOptionsTitle}}</span></div>
 
-    {{!-- An example input option --}}
-    <div class="row box mt-20">
-      <h4>Instance Options</h4>
+    {{#accordion-list-item
+      title="1. Account Access"
+      detail="Configure where to find the SMTX OS server"
+      expandAll=expandAll
+      expand=(action expandFn)
+      expandOnInit=true
+    }}
       <div class="row">
-        <div class="col span-2 col-inline">
-          <label>CPUs</label>
+        <div class="col span-6">
+          <label class="acc-label">SMTX OS Server{{field-required}}</label>
+          {{input
+            type="text"
+            value=config.server
+            classNames="form-control"
+            placeholder="SMTX OS hostname/IP"
+          }}
         </div>
 
-        <div class="col span-1">
-          {{config.cpuCount}}
+        <div class="col span-6">
+          <label class="acc-label">Port{{field-required}}</label>
+          {{input-integer
+            min=1
+            max=65535
+            value=config.port
+            classNames="form-control"
+          }}
         </div>
-        <div class="col span-3">
-          {{input-slider value=config.cpuCount valueMin=1 valueMax=32}}
+      </div>
+
+      <div class="row">
+        <div class="col span-6">
+          <label class="acc-label">Username{{field-required}}</label>
+          {{input
+            type="text"
+            value=config.username
+            classNames="form-control"
+            placeholder="e.g. 127.0.0.1"
+          }}
+
         </div>
 
-        <div class="col span-2 col-inline">
-          <label>Memory Size</label>
+        <div class="col span-6">
+          <label class="acc-label">Password{{field-required}}</label>
+          {{input
+            type="password"
+            value=config.password
+            classNames="form-control"
+          }}
         </div>
-        <div class="col span-4">
+      </div>
+
+      <p class="help-block">
+        Note: The account provided above should have access to create virtual machines.
+      </p>
+    {{/accordion-list-item}}
+
+    {{#accordion-list-item
+      title="2. Instance Options"
+      detail="Choose the size and OS of the virtual machine"
+      expandAll=expandAll
+      expand=(action expandFn)
+      expandOnInit=true
+    }}
+      <div class="row">
+        <div class="col span-6">
+          <label class="acc-label">CPUs{{field-required}}</label>
           <div class="input-group">
-            {{input-integer min=1 value=config.memorySize classNames="form-control"}}
-            <div class="input-group-addon bg-default">MB</div>
+            {{input-integer
+              min=1
+              max=32
+              value=config.cpuCount
+              classNames="form-control"
+            }}
+            <div class="input-group-addon bg-default">Cores</div>
+          </div>
+        </div>
+
+        <div class="col span-6">
+          <label class="acc-label">Memory{{field-required}}</label>
+          <div class="input-group">
+            {{input-integer
+              min=1024
+              value=config.memorySize
+              classNames="form-control"
+            }}
+            <div class="input-group-addon bg-default">MiB</div>
           </div>
         </div>
       </div>
-    </div>
+
+      <div class="row">
+        <div class="col span-6">
+          <label class="acc-label">Disk{{field-required}}</label>
+          <div class="input-group">
+            {{input-integer
+              min=1024
+              value=config.diskSize
+              classNames="form-control"
+            }}
+            <div class="input-group-addon bg-default">MiB</div>
+          </div>
+        </div>
+
+        <div class="col span-6">
+          <label class="acc-label">Storage Policy{{field-required}}</label>
+          {{input
+            type="text"
+            value=config.storagePolicyName
+            classNames="form-control"
+          }}
+          <p class="help-block">
+            Storage policy to create VM disk on
+          </p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col span-12">
+          <label class="acc-label">OS Image Path{{field-required}}</label>
+          {{input
+            type="text"
+            value=config.dockerosImagePath
+            classNames="form-control"
+          }}
+          <p class="help-block">
+              Note: you should first upload the SMTX DockerOS image to a NFS datastore of SMTX OS. The path should be in format of [datastore-name]/file-path.
+          </p>
+        </div>
+      </div>
+    {{/accordion-list-item}}
+
+    {{#accordion-list-item
+      title="3. Scheduling"
+      detail="Choose scheduling preferences of the virtual machines"
+      expandAll=expandAll
+      expand=(action expandFn)
+      expandOnInit=true
+    }}
+      <div class="row">
+        <div class="col span-6">
+          <label class="acc-label">Network{{field-required}}</label>
+          {{input
+            type="text"
+            value=config.networkName
+            classNames="form-control"
+          }}
+          <p class="help-block">
+            Network to attach VM to
+          </p>
+        </div>
+
+        <div class="col span-6">
+          <label class="acc-label">High Availability</label>
+          <div>
+            {{input
+              type="checkbox"
+              value=config.ha
+              classNames="form-control"
+            }}
+          </div>
+        </div>
+      </div>
+    {{/accordion-list-item}}
 
     {{!-- This following contains the Name, Labels and Engine Options fields --}}
     <div class="over-hr"><span>{{templateOptionsTitle}}</span></div>
