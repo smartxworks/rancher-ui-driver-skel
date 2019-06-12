@@ -7,6 +7,7 @@ Rancher UI driver for the [docker-machine-driver-smtxos](https://github.com/smar
 * Add SMTX OS Node Driver in Rancher 2.x (Global -> Tools -> Drivers -> Node Drivers -> Add Node Driver)
   * Download URL: `https://github.com/smartxworks/docker-machine-driver-smtxos/releases/download/v0.1.0/docker-machine-driver-smtxos-0.1.0.linux-amd64.tar.gz`
   * Custom UI URL: `https://smartxworks.github.io/rancher-ui-driver-smtxos/releases/v0.1.x/component.js`
+  * Whitelist Domains: `smartxworks.github.io`
 * Wait for the driver to become "Active"
 * Go to Global -> Clusters -> Add Cluster, SMTX OS driver should show up.
 
